@@ -64,6 +64,11 @@ http {
 
 ---
 
+# 🗺️ Roadmap / TODO
+- Support PoW token via X-PoW request header (in addition to / instead of cookies) for better API compatibility.
+
+---
+
 ## 💰 Support & Donations
 
 If you’d like to support my work, you can donate using any of the following cryptocurrencies:
