@@ -24,6 +24,14 @@ Once solved, the browser retries the request with a valid token — and NGINX le
 
 ---
 
+## 🧪 Name & Inspiration
+
+> Bastet — the Egyptian goddess of protection — guards your services from unwanted visitors, silently and efficiently.
+
+Bastet’s idea were inspired by [Anubis](https://github.com/TecharoHQ/anubis) by TecharoHQ.
+
+---
+
 ## 🧠 Example Configuration
 ```
 load_module /path/to/modules/ngx_http_pow_module.so;
