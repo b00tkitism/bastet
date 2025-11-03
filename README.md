@@ -67,6 +67,7 @@ http {
 # 🗺️ Roadmap / TODO
 - [ ] Support PoW token via X-PoW request header (in addition to / instead of cookies) for better API compatibility.
 - [ ] Detect Selenium
+- [ ] Generalize powlib for easier implementation of new hash algorithms.
 ---
 
 ## 💰 Support & Donations
