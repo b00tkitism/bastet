@@ -69,7 +69,8 @@ http {
 ---
 
 # 🗺️ Roadmap / TODO
-- [ ] Support PoW token via X-PoW request header (in addition to / instead of cookies) for better API compatibility.
+- [x] Support PoW token via X-PoW request header (in addition to / instead of cookies) for better API compatibility.
+- [ ] Optional header allowance.
 - [ ] Detect Selenium
 - [x] Generalize powlib for easier implementation of new hash algorithms.
 - [ ] Add options to use optional obfuscation for JS solver

@@ -242,10 +242,34 @@ ngx_http_bastet_access_handler(ngx_http_request_t *r)
 
     ngx_http_bastet_main_conf_t *mcf = ngx_http_get_module_main_conf(r, ngx_http_bastet_module);
 
-    ngx_str_t name = ngx_string("bastet");
-    ngx_str_t value;
-    ngx_table_elt_t *ck = ngx_http_parse_multi_header_lines(r, r->headers_in.cookie, &name, &value);
-    if (ck && value.len > 0) {
+    ngx_str_t cookie_name = ngx_string("bastet");
+    ngx_str_t value = ngx_string("");
+
+    ngx_table_elt_t *ck = ngx_http_parse_multi_header_lines(r, r->headers_in.cookie, &cookie_name, &value);
+    if (!ck) {
+        ngx_list_part_t *part = &r->headers_in.headers.part;
+        ngx_table_elt_t *h = part->elts;
+
+        for (ngx_uint_t i = 0;; i++) {
+            if (i >= part->nelts) {
+                if (part->next == NULL)
+                    break;
+
+                part = part->next;
+                h = part->elts;
+                i = 0;
+            }
+
+            if (h[i].key.len == sizeof("X-Bastet") - 1 && 
+                ngx_strncasecmp(h[i].key.data, (u_char *)"X-Bastet", sizeof("X-Bastet") - 1) == 0)
+            {
+                value = h[i].value;
+                break;
+            }
+        }
+    }
+
+    if (value.len > 0) {
         if (bastet_validate_cookie(value.data, (unsigned long)value.len) == 1) {
             return NGX_DECLINED;
         }
