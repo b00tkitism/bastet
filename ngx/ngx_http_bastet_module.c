@@ -19,6 +19,15 @@ static ngx_command_t ngx_http_bastet_commands[] = {
     },
 
     {
+        ngx_string("bastet_allow_x_bastet"),
+        NGX_HTTP_MAIN_CONF | NGX_CONF_NOARGS,
+        ngx_http_bastet_allow_x_bastet,
+        NGX_HTTP_MAIN_CONF_OFFSET,
+        0,
+        NULL
+    },
+
+    {
         ngx_string("bastet_mode"),
         NGX_HTTP_MAIN_CONF | NGX_CONF_TAKE1,
         ngx_http_bastet_mode,
@@ -137,6 +146,14 @@ ngx_http_bastet_toggle(ngx_conf_t *cf, ngx_command_t *cmd, void *conf)
 }
 
 static char *
+ngx_http_bastet_allow_x_bastet(ngx_conf_t *cf, ngx_command_t *cmd, void *conf)
+{
+    ngx_http_bastet_main_conf_t* mcf = conf;
+    mcf->allow_x_bastet = 1;
+    return NGX_CONF_OK;
+}
+
+static char *
 ngx_http_bastet_mode(ngx_conf_t *cf, ngx_command_t *cmd, void *conf)
 {
     ngx_http_bastet_main_conf_t *mcf = conf;
@@ -246,7 +263,7 @@ ngx_http_bastet_access_handler(ngx_http_request_t *r)
     ngx_str_t value = ngx_string("");
 
     ngx_table_elt_t *ck = ngx_http_parse_multi_header_lines(r, r->headers_in.cookie, &cookie_name, &value);
-    if (!ck) {
+    if (!ck && mcf->allow_x_bastet) {
         ngx_list_part_t *part = &r->headers_in.headers.part;
         ngx_table_elt_t *h = part->elts;
 

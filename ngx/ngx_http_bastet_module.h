@@ -13,6 +13,7 @@ typedef enum {
 
 typedef struct {
     ngx_flag_t mode; // enabled: inclusion. disabled: exclusion
+    ngx_flag_t allow_x_bastet;
     ngx_str_t  secret;
     uint16_t   difficulty;
     ngx_uint_t ttl;
@@ -28,6 +29,7 @@ static void *ngx_http_bastet_create_loc_conf(ngx_conf_t *cf);
 static char *ngx_http_bastet_merge_loc_conf(ngx_conf_t *cf, void *parent, void *child);
 
 static char *ngx_http_bastet_toggle(ngx_conf_t *cf, ngx_command_t *cmd, void *conf);
+static char *ngx_http_bastet_allow_x_bastet(ngx_conf_t *cf, ngx_command_t *cmd, void *conf);
 static char *ngx_http_bastet_mode(ngx_conf_t *cf, ngx_command_t *cmd, void *conf);
 static char *ngx_http_bastet_secret(ngx_conf_t *cf, ngx_command_t *cmd, void *conf);
 static char *ngx_http_bastet_difficulty(ngx_conf_t *cf, ngx_command_t *cmd, void *conf);

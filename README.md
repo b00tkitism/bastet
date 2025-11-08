@@ -39,38 +39,33 @@ load_module /path/to/modules/ngx_http_bastet_module.so;
 events {}
 
 http {
-    server {
-        listen 8080;
-        server_name localhost;
+	bastet_allow_x_bastet; # by default X-Bastet header is not allowed
+	bastet_mode exclusion; # default is inclusion, it means all of routes are protected by Bastet except ones which is toggled by bastet_toggle directive
+	bastet_secret "change_this_to_a_long_random_secret"; # a random secret used for HMAC
+	bastet_difficulty_bits 15; # bigger == longer time to load your websites;
+	bastet_ttl 1h; # solved challenge allowance duration
 
-        # indicates if you want to specify included or excluded routes
-        # if set to inclusion: bastet will be enabled on all routes except ones containing bastet_toggle directive
-        # if set to exclusion: bastet will be disabled on all routes except ones containing bastet_toggle directive
-        bastet_mode exclusion; 
-        bastet_secret "change_this_to_a_long_random_secret";
-      	bastet_difficulty_bits 18;
-      	bastet_ttl 1h; # indicate how long a solved challenge can be used to access protected endpoints;
-        
-        # Protected route – requires Proof-of-Work
-        location /protected/ {
-            bastet_toggle;                     # Enable Bastet on route
-            proxy_pass http://127.0.0.1:9000;
-        }
 
-        # Optional: public homepage for testing
-        location / {
-            root /var/www/html;
-            index index.html;
-        }
-    }
+	server {
+		listen 9190;
+		location /not-safe {
+			return 200 'hey';
+		}
+
+		location / {
+			bastet_toggle; # toggle bastet mode
+		}
+	}
+
 }
+
 ```
 
 ---
 
 # 🗺️ Roadmap / TODO
-- [x] Support PoW token via X-PoW request header (in addition to / instead of cookies) for better API compatibility.
-- [ ] Optional header allowance.
+- [x] Support PoW token via X-Bastet request header (in addition to / instead of cookies) for better API compatibility.
+- [x] Optional header allowance. (`bastet_allow_x_bastet` directive)
 - [ ] Detect Selenium
 - [x] Generalize powlib for easier implementation of new hash algorithms.
 - [ ] Add options to use optional obfuscation for JS solver
