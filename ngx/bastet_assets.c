@@ -1,8 +1,8 @@
-#include "pow_assets.h"
+#include "bastet_assets.h"
 #include <string.h>
 
-#include "generated/pow_page.inc"
-#include "generated/pow_solver.inc"
+#include "generated/bastet_page.inc"
+#include "generated/bastet_solver.inc"
 
 static const char TOK_CHALLENGE[] = "__CHALLENGE_JSON__";
 static const char TOK_SOLVER[]    = "__SOLVER_JS__";
@@ -45,11 +45,11 @@ static ngx_int_t replace_once(ngx_http_request_t *r,
     return NGX_OK;
 }
 
-ngx_int_t pow_render_page(ngx_http_request_t *r, ngx_str_t challenge_json, ngx_str_t *out)
+ngx_int_t bastet_render_page(ngx_http_request_t *r, ngx_str_t challenge_json, ngx_str_t *out)
 {
     ngx_str_t step1;
     if (replace_once(r,
-                     (const u_char *)POW_PAGE, (size_t)POW_PAGE_len,
+                     (const u_char *)BASTET_PAGE, (size_t)BASTET_PAGE_len,
                      TOK_CHALLENGE,
                      challenge_json.data, challenge_json.len,
                      &step1) != NGX_OK)
@@ -60,7 +60,7 @@ ngx_int_t pow_render_page(ngx_http_request_t *r, ngx_str_t challenge_json, ngx_s
     if (replace_once(r,
                      step1.data, step1.len,
                      TOK_SOLVER,
-                     (const u_char *)POW_SOLVER, (size_t)POW_SOLVER_len,
+                     (const u_char *)BASTET_SOLVER, (size_t)BASTET_SOLVER_len,
                      out) != NGX_OK)
     {
         return NGX_ERROR;
@@ -69,7 +69,7 @@ ngx_int_t pow_render_page(ngx_http_request_t *r, ngx_str_t challenge_json, ngx_s
     return NGX_OK;
 }
 
-void pow_add_security_headers(ngx_http_request_t *r)
+void bastet_add_security_headers(ngx_http_request_t *r)
 {
     ngx_table_elt_t *h;
 
@@ -89,7 +89,7 @@ void pow_add_security_headers(ngx_http_request_t *r)
     if (h){ h->hash=1; ngx_str_set(&h->key,"Referrer-Policy"); ngx_str_set(&h->value,"no-referrer"); }
 }
 
-ngx_table_elt_t *pow_find_header(ngx_http_request_t *r, const char *name)
+ngx_table_elt_t *bastet_find_header(ngx_http_request_t *r, const char *name)
 {
     ngx_list_part_t *part = &r->headers_in.headers.part;
     ngx_table_elt_t *h = part->elts;

@@ -15,7 +15,7 @@ Once solved, the browser retries the request with a valid token — and NGINX le
 
 ## 🧩 Features
 
-- ⚙️ **Plug-and-play directive:** `pow on;`
+- ⚙️ **Plug-and-play directive:** `bastet_toggle;`
 - 🧠 **Stateless validation** — no Redis or shared memory
 - 📦 **Dynamic NGINX module** — no full rebuild required
 - 💡 **Embedded assets** — HTML and JS solver bundled automatically and can be customized
@@ -34,7 +34,7 @@ Bastet’s idea were inspired by [Anubis](https://github.com/TecharoHQ/anubis) b
 
 ## 🧠 Example Configuration
 ```
-load_module /path/to/modules/ngx_http_pow_module.so;
+load_module /path/to/modules/ngx_http_bastet_module.so;
 
 events {}
 
@@ -43,13 +43,17 @@ http {
         listen 8080;
         server_name localhost;
 
-        pow_secret "change_this_to_a_long_random_secret";
-      	pow_difficulty_bits 18;
-      	pow_ttl 1h; # indicate how long a solved challenge can be used to access protected endpoints;
+        # indicates if you want to specify included or excluded routes
+        # if set to inclusion: bastet will be enabled on all routes except ones containing bastet_toggle directive
+        # if set to exclusion: bastet will be disabled on all routes except ones containing bastet_toggle directive
+        bastet_mode exclusion; 
+        bastet_secret "change_this_to_a_long_random_secret";
+      	bastet_difficulty_bits 18;
+      	bastet_ttl 1h; # indicate how long a solved challenge can be used to access protected endpoints;
         
         # Protected route – requires Proof-of-Work
         location /protected/ {
-            pow on;                     # Enable Bastet
+            bastet_toggle;                     # Enable Bastet on route
             proxy_pass http://127.0.0.1:9000;
         }
 

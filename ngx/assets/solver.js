@@ -20,7 +20,7 @@ function lzBits(arr){
   return bits;
 }
 async function solve(){
-  const el=document.getElementById('pow-challenge');
+  const el=document.getElementById('bastet-challenge');
   if(!el) return;
   const challenge = JSON.parse(el.textContent || '{}');
   const data=b64u_dec(challenge.data);
@@ -41,7 +41,7 @@ async function solve(){
       dv2.setUint16(40, Number(diff), true);
       dv2.setBigUint64(42, nonce, true);
       out.set(sig, 50);
-      document.cookie='pow='+b64u_bytes(out)+'; Max-Age=3600; Path=/; SameSite=Lax';
+      document.cookie='bastet='+b64u_bytes(out)+'; Max-Age=3600; Path=/; SameSite=Lax';
       location.replace(location.href);
       return;
     }

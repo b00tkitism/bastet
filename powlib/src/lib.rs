@@ -23,7 +23,7 @@ fn lz_bits(bytes: &[u8]) -> u16 {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn pow_set_secret(ptr: *const c_uchar, len: c_ulong) -> c_int {
+pub extern "C" fn bastet_set_secret(ptr: *const c_uchar, len: c_ulong) -> c_int {
     if ptr.is_null() || len == 0 {
         return 0;
     }
@@ -36,7 +36,7 @@ pub extern "C" fn pow_set_secret(ptr: *const c_uchar, len: c_ulong) -> c_int {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn pow_issue_challenge(json_out: *mut *const c_char, difficulty_bits: u16, ttl_millis: u64) -> c_int {
+pub extern "C" fn bastet_issue_challenge(json_out: *mut *const c_char, difficulty_bits: u16, ttl_millis: u64) -> c_int {
     if json_out.is_null() { 
         return 0; 
     }
@@ -78,7 +78,7 @@ pub extern "C" fn pow_issue_challenge(json_out: *mut *const c_char, difficulty_b
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn pow_validate_cookie(
+pub extern "C" fn bastet_validate_cookie(
     cookie_ptr: *const c_uchar,
     cookie_len: c_ulong,
 ) -> c_int {

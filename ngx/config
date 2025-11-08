@@ -1,7 +1,6 @@
-# ../ngx-pow-c/config  (for --add-dynamic-module)
 ngx_module_type=HTTP
-ngx_module_name=ngx_http_pow_module
-ngx_module_srcs="$ngx_addon_dir/ngx_http_pow_module.c $ngx_addon_dir/pow_assets.c"
+ngx_module_name=ngx_http_bastet_module
+ngx_module_srcs="$ngx_addon_dir/ngx_http_bastet_module.c $ngx_addon_dir/bastet_assets.c"
 
 # Link against your Rust cdylib and embed runtime search path
 ngx_module_libs="-L/usr/local/lib -lpow -Wl,-rpath,/usr/local/lib"
