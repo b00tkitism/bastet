@@ -35,7 +35,7 @@ pub extern "C" fn bastet_issue_challenge(
 
     let ch = Challenge::issue(ttl_millis, difficulty_bits);
 
-    let sig = hmac256(
+    let sig = hmac256_finalize(
         secret,
         &[ &ch.data, &ch.expires_at.to_le_bytes(), &ch.difficulty_bits.to_le_bytes() ],
     );

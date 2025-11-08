@@ -1,4 +1,8 @@
-type HmacSha256 = Hmac<Sha2>;
+use sha2::Sha256;
+use hmac::{Mac, Hmac};
+use crate::constants::{*};
+
+type HmacSha256 = Hmac<Sha256>;
 
 
 #[inline]
