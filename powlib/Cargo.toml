@@ -9,6 +9,7 @@ crate-type = ["cdylib"]
 
 [dependencies]
 base64 = "0.22.1"
+hex = "0.4.3"
 hmac = "0.12.1"
 json = "0.12.4"
 libc = "0.2.177"
