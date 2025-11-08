@@ -71,7 +71,7 @@ http {
 # 🗺️ Roadmap / TODO
 - [ ] Support PoW token via X-PoW request header (in addition to / instead of cookies) for better API compatibility.
 - [ ] Detect Selenium
-- [ ] Generalize powlib for easier implementation of new hash algorithms.
+- [x] Generalize powlib for easier implementation of new hash algorithms.
 - [ ] Add options to use optional obfuscation for JS solver
 
 > ⚠️ as this project is only used for rate limiting not defeating bots and scrapers but we have plans for that too.
